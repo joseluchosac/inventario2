@@ -25,6 +25,12 @@
           'active' => request()->routeIs('admin.customers.*'),
       ],
       [
+          'name' => 'Proveedores',
+          'icon' => 'fa-solid fa-users',
+          'href' => route('admin.suppliers.index'),
+          'active' => request()->routeIs('admin.suppliers.*'),
+      ],
+      [
           'header' => 'Administrar página',
       ],
       [
