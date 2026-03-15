@@ -31,6 +31,12 @@
           'active' => request()->routeIs('admin.suppliers.*'),
       ],
       [
+          'name' => 'Almacenes',
+          'icon' => 'fa-solid fa-warehouse',
+          'href' => route('admin.warehouses.index'),
+          'active' => request()->routeIs('admin.warehouses.*'),
+      ],
+      [
           'header' => 'Administrar página',
       ],
       [

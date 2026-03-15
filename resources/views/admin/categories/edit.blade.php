@@ -12,7 +12,7 @@
 
 <x-admin-layout title="Editar categoría" :breadcrumbs="$breadcrumbs">
 
-    <div>
+    <div class="max-w-4xl mx-auto">
         <x-wire-card>
             <form class="space-y-4" action="{{ route('admin.categories.update', $category) }}" method="POST">
                 @csrf

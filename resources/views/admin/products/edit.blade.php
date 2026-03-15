@@ -11,7 +11,7 @@
 @endphp
 
 <x-admin-layout title="Editar producto" :breadcrumbs="$breadcrumbs">
-    <div>
+    <div class="max-w-4xl mx-auto">
         @push('css')
             <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
         @endpush

@@ -13,7 +13,7 @@
 <x-admin-layout title="Nuevo producto" :breadcrumbs="$breadcrumbs">
 
 
-    <div>
+    <div class="max-w-4xl mx-auto">
         <x-wire-card>
             <form class="space-y-4" action="{{ route('admin.products.store') }}" method="POST">
                 @csrf
