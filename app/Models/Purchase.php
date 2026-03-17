@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Purchase extends Model
 {
     protected $fillable = [
-        'bourcher_type', 
+        'voucher_type', 
         'serie', 
         'correlative', 
         'date', 

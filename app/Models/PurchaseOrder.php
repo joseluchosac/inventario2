@@ -7,13 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class PurchaseOrder extends Model
 {
     protected $fillable = [
-        'bourcher_type', 
+        'voucher_type', 
         'serie', 
         'correlative', 
         'date', 
         'supplier_id', 
         'total', 
         'observation'
+    ];
+
+    protected $casts = [
+        'date' => 'datetime',
     ];
 
     // Relación muchos a muchos polimórfica

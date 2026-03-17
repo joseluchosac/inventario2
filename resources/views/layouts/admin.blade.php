@@ -67,7 +67,7 @@
     @include('layouts.includes.admin.navigation')
     @include('layouts.includes.admin.sidebar')
 
-    <div class="p-2 sm:ml-64">
+    <div class="md:p-2 sm:ml-64">
         <div class="mt-14 rounded-lg border-gray-200 p-4 dark:border-gray-700">
       <div class="flex justify-between items-center">
         @include('layouts.includes.admin.breadcrumb')
@@ -88,6 +88,15 @@
     {{-- flowbite --}}
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
+    {{-- Script para eventos livewire --}}
+    <script>
+        Livewire.on('swal', function(data){
+            Swal.fire(data[0]);
+        })
+
+    </script>
+
+    {{-- Script para eventos flash --}}
     @if (session('swal'))
         <script>
             Swal.fire(@json(session('swal')));

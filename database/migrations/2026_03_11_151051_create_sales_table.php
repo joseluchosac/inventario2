@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->integer('bourcher_type');
+            $table->integer('voucher_type');
             $table->string('serie');
             $table->integer('correlative');
-            $table->timestamp('date');
+            $table->timestamp('date')->useCurrent();
             $table->foreignId('quote_id')->constrained()->onDelete('cascade');
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->foreignId('warehouse_id')->constrained()->onDelete('cascade');
