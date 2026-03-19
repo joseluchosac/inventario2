@@ -2,40 +2,32 @@
 
 namespace App\Livewire\Admin\Datatables;
 
+use App\Models\Inventory;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 
 class ProductTable extends DataTableComponent
 {
     // protected $model = Product::class;
 
+    public $openModal = false;
+    public $inventories = [];
+
     public function configure(): void
     {
         $this->setPrimaryKey('id');
         $this->setDefaultSort('id', 'desc');
 
-        // $this->setThAttributes(function(Column $column) {
-        //     if ($column->isField('description')) {
-        //         return [
-        //             'class' => 'w-1/4 truncate bg-red-100',
-        //         ];
-        //     }
-        
-        //     return [];
-        // });
-        // $this->setTdAttributes(function(Column $column, $row, $columnIndex, $rowIndex) {
-        //     if ($column->isField('description') && ($column->getTable() == "products")) {
-        //         return [
-        //             'class' => 'w-1/4 truncate bg-red-100',
-        //         ];
-        //     }
-        //     return [];
-        // });
-
-
+        // Configurar área del modal
+        $this->setConfigurableAreas([
+            'after-wrapper' => [
+                'admin.products.modal'
+            ]
+        ]);
     }
 
     public function columns(): array
@@ -75,6 +67,14 @@ class ProductTable extends DataTableComponent
                 ->sortable(),
             Column::make("Precio", "price")
                 ->sortable(),
+            Column::make("Stock", "stock")
+                ->sortable()
+                ->format(function($value, $row){
+                    return view('admin.products.stock',[
+                        'stock' => $value,
+                        'product' => $row
+                    ]);
+                }),
             Column::make("Creado", "created_at")
                 ->format(fn($value) => $value->format('d/m/Y h:i a'))
                 ->sortable(),
@@ -95,5 +95,22 @@ class ProductTable extends DataTableComponent
     public function builder(): Builder
     {
         return Product::query()->with(['category', 'images']);
+    }
+
+    // Método para abrir un modal del stock del producto por almacén
+    public function showStock($productId)
+    {
+        $this->openModal = true;
+
+        $latestInventories = Inventory::where('product_id', $productId)
+            ->select('warehouse_id', DB::raw('MAX(id) as id'))
+            ->groupBy('warehouse_id')
+            ->pluck('id'); // pluck: genera un array a partir de los ids
+        
+        $this->inventories = Inventory::whereIn('id', $latestInventories)
+            ->with(['warehouse'])
+            ->get();
+
+        // dd($this->inventories->toArray());
     }
 }

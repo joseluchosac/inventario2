@@ -121,4 +121,8 @@ class ProductController extends Controller
         ]);
     }
 
+    public function kardex(Product $product)
+    {
+        return view('admin.products.kardex', compact('product'));
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Inventory;
+use App\Models\Product;
 
 class KardexService
 {
@@ -40,6 +41,10 @@ class KardexService
       'cost_balance' => $newCostBalance,
       'total_balance' => $newTotalBalance,
     ]);
+
+    Product::where('id', $product['id'])
+      ->first()
+      ->increment('stock', $product['quantity']);
   }
 
   public function registerExit($model, array $product, $warehouseId, $detail)
@@ -61,5 +66,9 @@ class KardexService
       'cost_balance' => $newCostBalance,
       'total_balance' => $newTotalBalance,
     ]);
+
+    Product::where('id', $product['id'])
+      ->first()
+      ->decrement('stock', $product['quantity']);
   }
 }

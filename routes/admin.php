@@ -12,7 +12,6 @@ use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\TransferController;
 use App\Http\Controllers\Admin\WarehouseController;
-use App\Models\Quote;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
@@ -24,6 +23,7 @@ Route::resource('categories', CategoryController::class)->except(['show']);
 Route::resource('products', ProductController::class)->except(['show']);
 Route::post('products/{product}/dropzone',[ProductController::class, 'dropzone'])->name('products.dropzone');
 Route::resource('warehouses', WarehouseController::class)->except(['show']);
+Route::get('products/{product}/kardex', [ProductController::class, 'kardex'])->name('products.kardex');
 
 // Compras
 Route::resource('suppliers', SupplierController::class)->except(['show']);
