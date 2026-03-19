@@ -30,10 +30,10 @@
                 <x-wire-input label="Fecha" wire:model="date" type="date" />
             </div>
             <x-wire-select 
-                label="Proveedor"
-                wire:model="supplier_id"
+                label="Cliente"
+                wire:model="customer_id"
                 :async-data="[
-                    'api' => route('api.suppliers.index'),
+                    'api' => route('api.customers.index'),
                     'method' => 'POST'
                 ]"
                 option-label="name"
@@ -138,7 +138,7 @@
                     icon='check'
                     spinner
                 >
-                    Guardar orden de compra
+                    Guardar cotización
                 </x-wire-button>
 
             </div>

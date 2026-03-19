@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 
-class PurchaseOrderController extends Controller
+class PurchaseController extends Controller
 {
     public function index()
     {
-        return view('admin.purchase_orders.index');
+        return view('admin.purchases.index');
     }
 
     public function create()
     {
-        return view('admin.purchase_orders.create');    
+        return view('admin.purchases.create');    
     }
 }

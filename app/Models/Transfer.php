@@ -17,6 +17,10 @@ class Transfer extends Model
         'destination_warehouse_id'
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
     // Relación muchos a muchos polimórfica
     public function products(){
         return $this->morphToMany(Product::class, 'productable')
@@ -32,5 +36,11 @@ class Transfer extends Model
     // Relación uno a muchos inversa
     public function destinationWarehouse(){
         return $this->belongsTo(Warehouse::class, 'destination_warehouse_id');
+    }
+
+    // Relación uno a muchos polimórfica
+    public function inventories()
+    {
+        return $this->morphMany(Inventory::class, 'inventoryable');
     }
 }

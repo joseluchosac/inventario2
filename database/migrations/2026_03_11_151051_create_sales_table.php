@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->timestamp('date')->useCurrent();
             $table->integer('voucher_type');
             $table->string('serie');
             $table->integer('correlative');
-            $table->timestamp('date')->useCurrent();
-            $table->foreignId('quote_id')->constrained()->onDelete('cascade');
+            $table->foreignId('quote_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->foreignId('warehouse_id')->constrained()->onDelete('cascade');
             $table->decimal('total', 10, 2)->default(0);

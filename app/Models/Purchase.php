@@ -18,6 +18,10 @@ class Purchase extends Model
         'observation'
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
     // Relación muchos a muchos polimórfica
     public function products(){
         return $this->morphToMany(Product::class, 'productable')
@@ -33,5 +37,11 @@ class Purchase extends Model
     // Relación uno a uno inversa
     public function purchaseOrder(){
         return $this->belongsTo(PurchaseOrder::class);
+    }
+
+    // Relación uno a muchos polimórfica
+    public function inventories()
+    {
+        return $this->morphMany(Inventory::class, 'inventoryable');
     }
 }

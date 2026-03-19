@@ -1,6 +1,6 @@
 <div
     x-data="{
-        products: @entangle('products'), {{-- variable livewire declarada e sincronizada con los datos del modelo --}}
+        products: @entangle('products').live, {{-- variable livewire declarada e sincronizada con los datos del modelo --}}
         total: @entangle('total'), {{-- variable livewire declarada e sincronizada con los datos del modelo --}}
 
         removeProduct(index) {
@@ -25,20 +25,49 @@
                     <option value="1">Factura</option>
                     <option value="2">Boleta</option>
                 </x-wire-native-select>
-                <x-wire-input label="Serie" wire:model="serie" disabled />
-                <x-wire-input label="Correlativo" wire:model="correlative" disabled />
+                <div class="grid grid-cols-2 gap-4">
+                    <x-wire-input label="Serie" wire:model="serie" />
+                    <x-wire-input label="Correlativo" wire:model="correlative" />
+                </div>
                 <x-wire-input label="Fecha" wire:model="date" type="date" />
+                <x-wire-select 
+                    label="Orden de compra"
+                    wire:model.live="purchase_order_id"
+                    :async-data="[
+                        'api' => route('api.purchase-orders.index'),
+                        'method' => 'POST'
+                    ]"
+                    option-label="name"
+                    option-value="id"
+                    option-description="description"
+                />
+                <div class="col-span-2">
+                    <x-wire-select 
+                        label="Proveedor"
+                        wire:model="supplier_id"
+                        :async-data="[
+                            'api' => route('api.suppliers.index'),
+                            'method' => 'POST'
+                        ]"
+                        option-label="name"
+                        option-value="id"
+                    />
+                </div>
+                <div class="col-span-2">
+                    <x-wire-select 
+                        label="Almacén"
+                        wire:model="warehouse_id"
+                        :async-data="[
+                            'api' => route('api.warehouses.index'),
+                            'method' => 'POST'
+                        ]"
+                        option-label="name"
+                        option-value="id"
+                        option-description="description"
+                        :disabled="count($products)"
+                    />
+                </div>
             </div>
-            <x-wire-select 
-                label="Proveedor"
-                wire:model="supplier_id"
-                :async-data="[
-                    'api' => route('api.suppliers.index'),
-                    'method' => 'POST'
-                ]"
-                option-label="name"
-                option-value="id"
-            />
             <div class="md:flex gap-4">
                 <x-wire-select 
                     label="Producto"
@@ -138,7 +167,7 @@
                     icon='check'
                     spinner
                 >
-                    Guardar orden de compra
+                    Guardar compra
                 </x-wire-button>
 
             </div>

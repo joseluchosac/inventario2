@@ -3,10 +3,16 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ImageController;
+use App\Http\Controllers\Admin\MovementController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PurchaseController;
 use App\Http\Controllers\Admin\PurchaseOrderController;
+use App\Http\Controllers\Admin\QuoteController;
+use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\TransferController;
 use App\Http\Controllers\Admin\WarehouseController;
+use App\Models\Quote;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
@@ -22,9 +28,15 @@ Route::resource('warehouses', WarehouseController::class)->except(['show']);
 // Compras
 Route::resource('suppliers', SupplierController::class)->except(['show']);
 Route::resource('purchase-orders', PurchaseOrderController::class)->only(['index', 'create']);
+Route::resource('purchases', PurchaseController::class)->only(['index', 'create']);
 
 // Ventas
 Route::resource('customers', CustomerController::class)->except(['show']);
+Route::resource('quotes', QuoteController::class)->only(['index', 'create']);
+Route::resource('sales', SaleController::class)->only(['index', 'create']);
 
+// Movements
+Route::resource('movements', MovementController::class)->only(['index', 'create']);
+Route::resource('transfers', TransferController::class)->only(['index', 'create']);
 
 Route::delete('images/{image}',[ImageController::class, 'destroy'])->name('images.destroy');

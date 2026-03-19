@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('reasons', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->unsignedInteger('type')->default(1)->comment('1: Ingreso, 2: Salida');
             $table->timestamps();
         });
     }

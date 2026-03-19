@@ -16,6 +16,9 @@ class Quote extends Model
         'observation'
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
     // Relación muchos a muchos polimórfica
     public function products(){
         return $this->morphToMany(Product::class, 'productable')

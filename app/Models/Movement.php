@@ -17,10 +17,30 @@ class Movement extends Model
         'reason_id'
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
+    // Relación uno a muchos inversa
+    public function warehouse(){
+        return $this->belongsTo(Warehouse::class);
+    }
+
+    // Relación uno a muchos inversa
+    public function reason(){
+        return $this->belongsTo(Reason::class);
+    }
+    
     // Relación muchos a muchos polimórfica
     public function products(){
         return $this->morphToMany(Product::class, 'productable')
             ->withPivot('quantity', 'price', 'subtotal') // Ademas trae los siguientes campos de la tabla pivot
             ->withTimestamps();
+    }
+
+    // Relación uno a muchos polimórfica
+    public function inventories()
+    {
+        return $this->morphMany(Inventory::class, 'inventoryable');
     }
 }

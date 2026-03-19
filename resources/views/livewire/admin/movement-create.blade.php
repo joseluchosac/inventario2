@@ -1,6 +1,6 @@
 <div
     x-data="{
-        products: @entangle('products'), {{-- variable livewire declarada e sincronizada con los datos del modelo --}}
+        products: @entangle('products').live, {{-- variable livewire declarada e sincronizada con los datos del modelo --}}
         total: @entangle('total'), {{-- variable livewire declarada e sincronizada con los datos del modelo --}}
 
         removeProduct(index) {
@@ -21,24 +21,44 @@
     <x-wire-card>
         <form wire:submit="save" class="space-y-4">
             <div class="grid md:grid-cols-4 gap-4">
-                <x-wire-native-select label="Tipo de comprobante" wire:model="voucher_type" >
-                    <option value="1">Factura</option>
-                    <option value="2">Boleta</option>
+                <x-wire-native-select
+                    label="Tipo de movimiento"
+                    wire:model.live="type" 
+                >
+                    <option value="1">Ingreso</option>
+                    <option value="2">Salida</option>
                 </x-wire-native-select>
                 <x-wire-input label="Serie" wire:model="serie" disabled />
                 <x-wire-input label="Correlativo" wire:model="correlative" disabled />
                 <x-wire-input label="Fecha" wire:model="date" type="date" />
+                <x-wire-select 
+                    class="md:col-span-2"
+                    label="Almacén"
+                    wire:model="warehouse_id"
+                    :async-data="[
+                        'api' => route('api.warehouses.index'),
+                        'method' => 'POST'
+                    ]"
+                    option-label="name"
+                    option-value="id"
+                    option-description="description"
+                    :disabled="count($products)"
+                />
+                <x-wire-select 
+                    class="md:col-span-2"
+                    label="Motivo"
+                    wire:model="reason_id"
+                    :async-data="[
+                        'api' => route('api.reasons.index'),
+                        'method' => 'POST',
+                        'params' => [
+                            'type' => $type
+                        ]
+                    ]"
+                    option-label="name"
+                    option-value="id"
+                />
             </div>
-            <x-wire-select 
-                label="Proveedor"
-                wire:model="supplier_id"
-                :async-data="[
-                    'api' => route('api.suppliers.index'),
-                    'method' => 'POST'
-                ]"
-                option-label="name"
-                option-value="id"
-            />
             <div class="md:flex gap-4">
                 <x-wire-select 
                     label="Producto"
@@ -67,7 +87,7 @@
                         <tr>
                             <th class="py-2 px-4">Producto</th>
                             <th class="py-2 px-4">Cantidad</th>
-                            <th class="py-2 px-4">Precio</th>
+                            <th class="py-2 px-4">Costo</th>
                             <th class="py-2 px-4">Subtotal</th>
                             <th class="py-2 px-4"></th>
                         </tr>
@@ -84,7 +104,6 @@
                                     <x-wire-input
                                         x-model.live="product.quantity"
                                         type="number"
-                                        class="w-20"
                                         min="0"
                                     />
                                 </td>
@@ -92,7 +111,6 @@
                                     <x-wire-input
                                         x-model.live="product.price"
                                         type="number"
-                                        class="w-20"
                                         step="0.01"
                                         min="0"
                                     />
@@ -138,7 +156,7 @@
                     icon='check'
                     spinner
                 >
-                    Guardar orden de compra
+                    Guardar movimiento
                 </x-wire-button>
 
             </div>

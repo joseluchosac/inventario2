@@ -18,6 +18,10 @@ class WarehouseSeeder extends Seeder
                 'name' => 'Almacén principal',
                 'location' => 'Calle Principal, Ciudad Principal'
             ],
+            [
+                'name' => 'Almacén secundario',
+                'location' => 'Calle Secundaria, Ciudad Secundaria'
+            ],
         ];
         
         foreach ($warehouses as $warehouse) {

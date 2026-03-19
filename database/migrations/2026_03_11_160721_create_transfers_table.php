@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
+            $table->timestamp('date')->useCurrent();
             $table->string('serie');
             $table->integer('correlative');
-            $table->timestamp('date')->useCurrent();
             $table->decimal('total', 10, 2)->default(0);
             $table->string('observation')->nullable();
             $table->foreignId('origin_warehouse_id')
