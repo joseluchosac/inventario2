@@ -32,6 +32,7 @@
                         </option>
                     @endforeach
                 </x-wire-native-select>
+                <x-wire-input label="Stock mínimo" name="min_stock" value="{{ old('min_stock'. 5) }}" type="number" step="1" />
                 <div class="flex justify-end items-center gap-4">
                     <a href="{{ route('admin.products.index') }}">
                         <button type="button">Cancelar</button>

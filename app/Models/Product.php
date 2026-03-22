@@ -18,7 +18,8 @@ class Product extends Model
         'barcode', 
         'price', 
         'category_id', 
-        'stock'
+        'stock', 
+        'min_stock'
     ];
 
     // Accesores

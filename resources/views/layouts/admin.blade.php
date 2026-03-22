@@ -69,7 +69,7 @@
 
     <div class="md:p-2 sm:ml-64">
         <div class="mt-14 rounded-lg border-gray-200 p-4 dark:border-gray-700">
-      <div class="flex justify-between items-center">
+      <div class="md:flex md:justify-between md:items-center">
         @include('layouts.includes.admin.breadcrumb')
         @isset($action)
           {{$action }}

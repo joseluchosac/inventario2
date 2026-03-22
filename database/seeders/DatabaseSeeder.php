@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Customer::factory(80)->create();
-        Supplier::factory(30)->create();
+        Supplier::factory(10)->create();
         Product::factory(100)->create();
 
 

@@ -8,9 +8,15 @@
 
 <x-admin-layout title="Categorías" :breadcrumbs="$breadcrumbs">
   <x-slot name="action">
-    <x-wire-button blue href="{{route('admin.categories.create')}}">
-      Nueva categoría
-    </x-wire-button>
+    <div class="flex gap-2 justify-center">
+      <x-wire-button flat secondary href="{{route('admin.categories.import')}}" title="Importar">
+        <i class="fa-solid fa-file-import"></i>
+      </x-wire-button>
+      <x-wire-button blue href="{{route('admin.categories.create')}}">
+        <i class="fa-solid fa-plus"></i>
+        Nueva categoría
+      </x-wire-button>
+    </div>
   </x-slot>
 
   <div class="mt-4">

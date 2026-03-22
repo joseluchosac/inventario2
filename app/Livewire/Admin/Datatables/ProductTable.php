@@ -2,17 +2,24 @@
 
 namespace App\Livewire\Admin\Datatables;
 
+use App\Exports\ProductsExport;
 use App\Models\Inventory;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 
 class ProductTable extends DataTableComponent
 {
     // protected $model = Product::class;
+        // evita N+1
+    public function builder(): Builder
+    {
+        return Product::query()->with(['category', 'images']);
+    }
 
     public $openModal = false;
     public $inventories = [];
@@ -28,6 +35,9 @@ class ProductTable extends DataTableComponent
                 'admin.products.modal'
             ]
         ]);
+
+        // $this->setAdditionalSelects(['quotes.id']);
+
     }
 
     public function columns(): array
@@ -91,10 +101,21 @@ class ProductTable extends DataTableComponent
         ];
     }
 
-    // evita N+1
-    public function builder(): Builder
+    public function bulkActions(): array
     {
-        return Product::query()->with(['category', 'images']);
+        return [
+            'exportSelected' => 'Exportar'
+        ];
+    }
+
+    public function exportSelected()
+    {
+        $selected = $this->getSelected();
+        $products = count($selected)
+            ? Product::whereIn('id', $selected)->get()
+            : Product::all();
+
+        return Excel::download(new ProductsExport($products), 'productos.xlsx');
     }
 
     // Método para abrir un modal del stock del producto por almacén

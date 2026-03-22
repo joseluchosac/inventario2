@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('price',10,2)->default(0);
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->integer('stock')->default(0);
+            $table->integer('min_stock')->default(5);
             $table->timestamps();
         });
     }

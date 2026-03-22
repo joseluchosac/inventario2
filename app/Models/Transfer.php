@@ -8,9 +8,9 @@ class Transfer extends Model
 {
     protected $fillable = [
         'type', 
+        'date', 
         'serie', 
         'correlative', 
-        'date', 
         'total', 
         'observation', 
         'origin_warehouse_id', 

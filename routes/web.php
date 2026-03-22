@@ -1,12 +1,11 @@
 <?php
 
+use App\Models\Product;
+use App\Models\Productable;
+use App\Models\Sale;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin');
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::middleware([
     'auth:sanctum',
@@ -17,3 +16,26 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('prueba', function(){
+    return Sale::query()
+            ->join('customers', 'sales.customer_id', '=', 'customers.id')
+            ->join('identities', 'customers.identity_id', '=', 'identities.id')
+            ->selectRaw('
+                customers.id as id,
+                customers.name as name,
+                customers.email as email,
+                identities.name as identity_type,
+                customers.document_number as document_number,
+                COUNT(sales.id) as total_sales,
+                SUM(sales.total) as total_amount
+            ')
+            ->groupBy(
+                'customers.id', 
+                'customers.name', 
+                'customers.email', 
+                'customers.document_number',
+                'identities.name'
+            )
+            ->get();
+})->name('prueba');

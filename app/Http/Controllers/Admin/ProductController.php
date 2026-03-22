@@ -38,7 +38,8 @@ class ProductController extends Controller
             'sku' => 'nullable|max:100',
             'barcode' => 'nullable|max:100',
             'price' => 'required|numeric|min:0',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+            'min_stock' => 'required|integer|min:0'
         ]);
         $product = Product::create($validated);
 
@@ -71,7 +72,8 @@ class ProductController extends Controller
             'sku' => 'nullable|max:100',
             'barcode' => 'nullable|max:100',
             'price' => 'required|numeric|min:0',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+            'min_stock' => 'required|integer|min:0'
         ]);
 
         $product->update($validated);
@@ -124,5 +126,9 @@ class ProductController extends Controller
     public function kardex(Product $product)
     {
         return view('admin.products.kardex', compact('product'));
+    }
+
+    public function import(){
+        return view('admin.products.import');
     }
 }

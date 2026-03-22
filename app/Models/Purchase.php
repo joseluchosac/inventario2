@@ -34,6 +34,10 @@ class Purchase extends Model
         return $this->belongsTo(Supplier::class);
     }
 
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
     // Relación uno a uno inversa
     public function purchaseOrder(){
         return $this->belongsTo(PurchaseOrder::class);

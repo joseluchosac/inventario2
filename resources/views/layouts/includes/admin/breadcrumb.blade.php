@@ -1,7 +1,6 @@
 @if (count($breadcrumbs))
 
-  <nav class="mb-4 ">
-
+  <nav>
     <ol class="flex flex-wrap">
       @foreach ($breadcrumbs as $item)
         <li
@@ -14,10 +13,8 @@
           @else
             {{ $item['name'] }}
           @endisset
-
         </li>
       @endforeach
-
     </ol>
 
     {{-- @if (count($breadcrumbs) > 1)

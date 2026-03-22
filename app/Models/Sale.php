@@ -33,6 +33,10 @@ class Sale extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
     // Relación uno a uno inversa
     public function quote(){
         return $this->belongsTo(Quote::class);
