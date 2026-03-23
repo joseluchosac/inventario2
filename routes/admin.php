@@ -12,7 +12,9 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\TransferController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WarehouseController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
@@ -56,3 +58,6 @@ Route::delete('images/{image}',[ImageController::class, 'destroy'])->name('image
 Route::get('reports/top-products', [ReportController::class, 'topProducts'])->name('reports.top-products');
 Route::get('reports/top-customers', [ReportController::class, 'topCustomers'])->name('reports.top-customers');
 Route::get('reports/low-stocks', [ReportController::class, 'lowStocks'])->name('reports.low-stocks');
+
+// Users
+Route::resource('users', UserController::class);
